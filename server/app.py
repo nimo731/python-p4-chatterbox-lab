@@ -15,6 +15,9 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 
+with app.app_context():
+    db.create_all()
+
 @app.route('/messages', methods=['GET'])
 def get_messages():
     messages = Message.query.order_by(Message.created_at.asc()).all()
