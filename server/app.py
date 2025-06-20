@@ -17,6 +17,11 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
+    # Seed a default message if none exist
+    if Message.query.first() is None:
+        msg = Message(body="Hello, World!", username="TestUser")
+        db.session.add(msg)
+        db.session.commit()
 
 @app.route('/messages', methods=['GET'])
 def get_messages():
